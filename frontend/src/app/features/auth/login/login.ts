@@ -65,7 +65,7 @@ export class Login implements OnInit {
         next: () => {
           this.snackbar.success(this.t('auth.login.success'));
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['dashboard']);
           }, 1500);
         },
         error: () => {
