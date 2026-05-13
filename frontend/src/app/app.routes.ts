@@ -6,7 +6,7 @@ import { ResetPassword } from './features/auth/reset-password/reset-password';
 import { Dashboard } from './features/dashboard/dashboard';
 
 export const routes: Routes = [{
-    path: '',
+    path: 'dashboard',
     component: Dashboard
   }, 
   {
