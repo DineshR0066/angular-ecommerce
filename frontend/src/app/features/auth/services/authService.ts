@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject,WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -13,8 +13,8 @@ import {
 } from '../schemas/auth.schemas';
 
 export interface ResetPasswordApiPayload {
-  readonly email: string;
-  readonly token: string;
+  readonly email: WritableSignal<String>;
+  readonly token: WritableSignal<String>;
   readonly newPassword: string;
 }
 

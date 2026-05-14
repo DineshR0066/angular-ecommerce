@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -12,13 +12,13 @@ import { LoginSchema } from '../schemas/auth.schemas';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrl: './login.scss',
 })
 export class Login implements OnInit {
   // ── Public state (template-bound) ────────────────────────────────────────
   loginForm!: FormGroup;
-  showPassword = false;
-  isSubmitting = false;
+  showPassword = signal<boolean>(false);
+  isSubmitting = signal<boolean>(false);
 
   // ── Services ──────────────────────────────────────────────────────────────
   readonly t: I18nService['t'];
@@ -41,7 +41,7 @@ export class Login implements OnInit {
   }
 
   togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
+    this.showPassword.update((value) => !value);
   }
 
   /** Validates via Zod before hitting the API. */
@@ -57,7 +57,7 @@ export class Login implements OnInit {
       return;
     }
 
-    this.isSubmitting = true;
+    this.isSubmitting.set(true);
     this.authService
       .login(parsed.data)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -70,7 +70,7 @@ export class Login implements OnInit {
         },
         error: () => {
           this.snackbar.error(this.t('auth.login.error'));
-          this.isSubmitting = false;
+          this.isSubmitting.set(false);
         },
       });
   }

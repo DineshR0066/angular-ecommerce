@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -12,11 +12,11 @@ import { ForgotPasswordSchema } from '../schemas/auth.schemas';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './forget-password.html',
-  styleUrl: './forget-password.css',
+  styleUrl: './forget-password.scss',
 })
 export class ForgetPassword implements OnInit {
   forgotForm!: FormGroup;
-  isSubmitting = false;
+  isSubmitting = signal<boolean>(false);
 
   readonly t: I18nService['t'];
   private readonly fb = inject(FormBuilder);
@@ -47,19 +47,19 @@ export class ForgetPassword implements OnInit {
       return;
     }
 
-    this.isSubmitting = true;
+    this.isSubmitting.set(true);
     this.authService
       .forgotPassword(parsed.data)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.snackbar.success(this.t('auth.forgotPassword.success'));
-          this.isSubmitting = false;
+          this.isSubmitting.set( false);
         },
         error: () => {
           // Security: same message regardless of whether email exists
           this.snackbar.info(this.t('auth.forgotPassword.success'));
-          this.isSubmitting = false;
+          this.isSubmitting.set( false);
         },
       });
   }
