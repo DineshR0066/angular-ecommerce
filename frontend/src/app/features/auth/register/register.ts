@@ -15,11 +15,12 @@ import { I18nService } from '../../../core/services/i18n.service';
 import { RegisterSchema } from '../schemas/auth.schemas';
 
 import { ButtonComponent } from '../../../shared/components/button/button';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ButtonComponent],
+  imports: [ReactiveFormsModule, RouterLink, ButtonComponent, TranslatePipe],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -29,7 +30,6 @@ export class Register implements OnInit {
   showConfirmPassword = signal<boolean>(false);
   isSubmitting = signal<boolean>(false);
 
-  readonly t: I18nService['t'];
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -37,8 +37,8 @@ export class Register implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly i18n = inject(I18nService);
 
-  constructor() {
-    this.t = this.i18n.t.bind(this.i18n);
+  t(key: string, params?: Record<string, string>): string {
+    return this.i18n.t(key, params);
   }
 
   ngOnInit(): void {

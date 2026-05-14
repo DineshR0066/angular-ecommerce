@@ -1,0 +1,28 @@
+<div class="profile-page">
+  <div class="profile-content" *ngIf="userProfile() && !userProfile().error">
+    <app-profile-template
+      [user]="userProfile()"
+      [stats]="stats() && !stats().error ? stats() : null"
+      (editProfile)="openEditModal()"
+    ></app-profile-template>
+  </div>
+
+  <div class="error-state" *ngIf="userProfile()?.error">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="error-icon"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <h3>Session Expired or Unauthorized</h3>
+    <p>Please log in again to access your profile.</p>
+    <app-button variant="primary" (btnClick)="logout()">Go to Login</app-button>
+  </div>
+
+  <div class="loading-state" *ngIf="!userProfile()">
+    <div class="spinner"></div>
+    <p>Loading profile...</p>
+  </div>
+
+  <app-edit-profile-modal
+    *ngIf="isEditModalOpen()"
+    [user]="userProfile()"
+    (close)="closeEditModal()"
+    (save)="onSaveProfile($event)"
+  ></app-edit-profile-modal>
+</div>

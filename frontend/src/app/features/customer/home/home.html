@@ -1,69 +1,74 @@
-<div class="home-layout">
-  <app-navbar></app-navbar>
+<main class="content">
+  <!-- Search Section -->
+  <section class="search-section">
+    <div class="search-container">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input 
+        type="text" 
+        placeholder="What are you looking for?" 
+        (input)="onSearch($event)"
+        class="search-input"
+      >
+    </div>
+  </section>
 
-  <main class="content">
-    <!-- Search Section -->
-    <section class="search-section">
-      <div class="search-container">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input 
-          type="text" 
-          placeholder="What are you looking for?" 
-          (input)="onSearch($event)"
-          class="search-input"
-        >
-      </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section class="categories-section">
-      <div class="categories-list">
+  <!-- Categories Section -->
+  <section class="categories-section">
+    <div class="categories-list">
+      <app-button 
+        [variant]="selectedCategory() === 'All Categories' ? 'primary' : 'secondary'"
+        (btnClick)="selectCategory('All Categories')"
+      >
+        All Categories
+      </app-button>
+      @for (category of categories(); track category) {
         <app-button 
-          [variant]="selectedCategory() === 'All Categories' ? 'primary' : 'secondary'"
-          (btnClick)="selectCategory('All Categories')"
+          [variant]="selectedCategory() === category ? 'primary' : 'secondary'"
+          (btnClick)="selectCategory(category)"
         >
-          All_Categories
+          {{ category | formatCategory }}
         </app-button>
-        @for (category of categories(); track category) {
-          <app-button 
-            [variant]="selectedCategory() === category ? 'primary' : 'secondary'"
-            (btnClick)="selectCategory(category)"
-          >
-            {{ category }}
-          </app-button>
+      }
+    </div>
+  </section>
+
+  <!-- Products Grid -->
+  <section class="products-section">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Fetching amazing products...</p>
+      </div>
+    } @else {
+      <div class="products-grid">
+        @for (product of products(); track product.product_id) {
+          <app-product-card 
+            [product]="product" 
+            (cardClick)="openProductModal($event)"
+          ></app-product-card>
+        } @empty {
+          <div class="no-results">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="no-results-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+            <p>No products found matching your search.</p>
+          </div>
         }
       </div>
-    </section>
+    }
+  </section>
+</main>
 
-    <!-- Products Grid -->
-    <section class="products-section">
-      @if (isLoading()) {
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Fetching amazing products...</p>
-        </div>
-      } @else {
-        <div class="products-grid">
-          @for (product of products(); track product.product_id) {
-            <app-product-card 
-              [product]="product" 
-              (cardClick)="openProductModal($event)"
-            ></app-product-card>
-          } @empty {
-            <div class="no-results">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="no-results-icon"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
-              <p>No products found matching your search.</p>
-            </div>
-          }
-        </div>
-      }
-    </section>
-  </main>
+@if (selectedProduct(); as product) {
+  <app-product-modal 
+    [product]="product" 
+    (close)="closeProductModal()"
+    (buyNow)="openBuyNowModal($event)"
+  ></app-product-modal>
+}
 
-  @if (selectedProduct(); as product) {
-    <app-product-modal 
-      [product]="product" 
-      (close)="closeProductModal()"
-    ></app-product-modal>
-  }
-</div>
+@if (buyNowProduct(); as product) {
+  <app-buy-now-modal
+    [product]="product"
+    (close)="closeBuyNowModal()"
+    (confirm)="onConfirmPurchase($event)"
+  ></app-buy-now-modal>
+}

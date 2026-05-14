@@ -15,8 +15,8 @@
   <div class="right-panel">
     <div class="login-card">
       <div class="header">
-        <h2 id="login-heading">{{t('auth.login.title')}}</h2>
-        <p>{{t('auth.login.subtitle')}}</p>
+        <h2 id="login-heading">{{ 'auth.login.title' | translate }}</h2>
+        <p>{{ 'auth.login.subtitle' | translate }}</p>
       </div>
 
       <form
@@ -27,12 +27,12 @@
       >
         <!-- Email -->
         <div class="form-group">
-          <label class="sr-only" for="email">{{t('auth.fields.email')}}</label>
+          <label class="sr-only" for="email">{{ 'auth.fields.email' | translate }}</label>
           <input
             type="email"
             id="email"
             formControlName="email"
-            [placeholder]="t('auth.fields.email')"
+            [placeholder]="'auth.fields.email' | translate"
             autocomplete="email"
             [attr.aria-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
             [attr.aria-describedby]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched ? 'email-error' : null"
@@ -41,10 +41,10 @@
           @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
             <div id="email-error" class="error-message" role="alert">
               @if (loginForm.get('email')?.hasError('required')) {
-                <span>{{t('auth.errors.emailRequired')}}</span>
+                <span>{{ 'auth.errors.emailRequired' | translate }}</span>
               }
               @if (loginForm.get('email')?.hasError('email')) {
-                <span>{{t('auth.errors.emailInvalid')}}</span>
+                <span>{{ 'auth.errors.emailInvalid' | translate }}</span>
               }
             </div>
           }
@@ -52,13 +52,13 @@
 
         <!-- Password -->
         <div class="form-group">
-          <label class="sr-only" for="password">{{t('auth.fields.password')}}</label>
+          <label class="sr-only" for="password">{{ 'auth.fields.password' | translate }}</label>
           <div class="password-input-wrapper">
             <input
               [type]="showPassword() ? 'text' : 'password'"
               id="password"
               formControlName="password"
-              [placeholder]="t('auth.fields.password')"
+              [placeholder]="'auth.fields.password' | translate"
               autocomplete="current-password"
               [attr.aria-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
               [attr.aria-describedby]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched ? 'password-error' : null"
@@ -83,14 +83,14 @@
           @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
             <div id="password-error" class="error-message" role="alert">
               @if (loginForm.get('password')?.hasError('required')) {
-                <span>{{t('auth.errors.passwordRequired')}}</span>
+                <span>{{ 'auth.errors.passwordRequired' | translate }}</span>
               }
             </div>
           }
         </div>
 
         <div class="forgot-password">
-          <a routerLink="/auth/forget-password">{{t('auth.login.forgotPassword')}}</a>
+          <a routerLink="/auth/forget-password">{{ 'auth.login.forgotPassword' | translate }}</a>
         </div>
 
         <app-button
@@ -101,13 +101,13 @@
           [disabled]="loginForm.invalid"
           [loading]="isSubmitting()"
         >
-          {{ t('auth.login.submitBtn') }}
+          {{ 'auth.login.submitBtn' | translate }}
         </app-button>
 
         <div class="signup-link">
           <p>
-            {{t('auth.login.noAccount')}}
-            <a routerLink="/auth/register">{{t('auth.login.getStarted')}}</a>
+            {{ 'auth.login.noAccount' | translate }}
+            <a routerLink="/auth/register">{{ 'auth.login.getStarted' | translate }}</a>
           </p>
         </div>
       </form>

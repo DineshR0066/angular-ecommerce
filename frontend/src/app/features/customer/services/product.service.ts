@@ -33,4 +33,14 @@ export class ProductService {
       params: { limit: limit.toString(), page: page.toString() },
     }).pipe(map(data => z.array(ProductSchema).parse(data)));
   }
+
+  buyProduct(orderData: any): Observable<any> {
+    return this.http.post('users/buy', orderData);
+  }
+
+  getOrders(userId: string, limit: number = 10, page: number = 0): Observable<any[]> {
+    return this.http.get<any[]>(`users/${userId}/products`, {
+      params: { limit: limit.toString(), page: page.toString() },
+    });
+  }
 }
