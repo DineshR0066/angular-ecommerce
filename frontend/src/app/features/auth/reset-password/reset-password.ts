@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -19,16 +19,16 @@ import { ResetPasswordSchema } from '../schemas/auth.schemas';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './reset-password.html',
-  styleUrl: './reset-password.css',
+  styleUrl: './reset-password.scss',
 })
 export class ResetPassword implements OnInit {
   resetForm!: FormGroup;
-  showPassword = false;
-  showConfirmPassword = false;
-  isSubmitting = false;
+  showPassword = signal<Boolean>(false);
+  showConfirmPassword = signal<Boolean>(false);
+  isSubmitting = signal<Boolean>(false);
 
-  private email = '';
-  private token = '';
+  private email = signal<String>('');
+  private token = signal<String>('');
 
   readonly t: I18nService['t'];
   private readonly fb = inject(FormBuilder);
@@ -45,10 +45,10 @@ export class ResetPassword implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      this.email = (params['email'] as string) || '';
-      this.token = (params['token'] as string) || '';
+      this.email.set((params['email'] as string) || '');
+      this.token.set((params['token'] as string) || '');
 
-      if (!this.email || !this.token) {
+      if (!this.email() || !this.token()) {
         this.snackbar.error(this.t('auth.resetPassword.invalidLink'));
       }
     });
@@ -82,9 +82,9 @@ export class ResetPassword implements OnInit {
 
   togglePasswordVisibility(field: 'password' | 'confirmPassword'): void {
     if (field === 'password') {
-      this.showPassword = !this.showPassword;
+      this.showPassword.update((value)=>!value);
     } else {
-      this.showConfirmPassword = !this.showConfirmPassword;
+      this.showConfirmPassword.update((value)=>!value);
     }
   }
 
@@ -105,7 +105,7 @@ export class ResetPassword implements OnInit {
       return;
     }
 
-    this.isSubmitting = true;
+    this.isSubmitting.set(true);
     this.authService
       .resetPassword({ email: this.email, token: this.token, newPassword: parsed.data.password })
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -116,7 +116,7 @@ export class ResetPassword implements OnInit {
         },
         error: () => {
           this.snackbar.error(this.t('auth.resetPassword.error'));
-          this.isSubmitting = false;
+          this.isSubmitting.set(false);
         },
       });
   }

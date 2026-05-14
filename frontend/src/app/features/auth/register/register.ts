@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -19,13 +19,13 @@ import { RegisterSchema } from '../schemas/auth.schemas';
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
-  styleUrl: './register.css',
+  styleUrl: './register.scss',
 })
 export class Register implements OnInit {
   registerForm!: FormGroup;
-  showPassword = false;
-  showConfirmPassword = false;
-  isSubmitting = false;
+  showPassword = signal<Boolean>(false);
+  showConfirmPassword = signal<Boolean>(false);
+  isSubmitting = signal<Boolean>(false);
 
   readonly t: I18nService['t'];
   private readonly fb = inject(FormBuilder);
@@ -74,9 +74,9 @@ export class Register implements OnInit {
 
   togglePasswordVisibility(field: 'password' | 'confirmPassword'): void {
     if (field === 'password') {
-      this.showPassword = !this.showPassword;
+      this.showPassword.update((value)=>!value);
     } else {
-      this.showConfirmPassword = !this.showConfirmPassword;
+      this.showConfirmPassword.update((value)=>!value);
     }
   }
 
@@ -95,7 +95,7 @@ export class Register implements OnInit {
     }
 
     const { confirmPassword: _, ...payload } = parsed.data;
-    this.isSubmitting = true;
+    this.isSubmitting.set(true);
 
     this.authService
       .register(payload)
@@ -107,7 +107,7 @@ export class Register implements OnInit {
         },
         error: () => {
           this.snackbar.error(this.t('auth.register.error'));
-          this.isSubmitting = false;
+          this.isSubmitting.set(false);
         },
       });
   }
