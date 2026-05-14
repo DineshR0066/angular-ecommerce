@@ -1,0 +1,92 @@
+.card {
+  background-color: #161b1e;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: rgba(125, 211, 252, 0.2);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+
+    .card-image img {
+      transform: scale(1.1);
+    }
+  }
+
+  .card-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 1rem;
+      transition: transform 0.5s ease;
+    }
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .card-category {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #f8fafc;
+      }
+
+      .stock {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.4rem;
+
+        &.low-stock {
+          color: #f43f5e;
+          background: rgba(244, 63, 94, 0.1);
+        }
+      }
+    }
+  }
+}

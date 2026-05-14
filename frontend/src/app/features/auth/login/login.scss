@@ -71,7 +71,7 @@
 
     .subtitle {
       font-size: 16px;
-      color: #a0aab2; // Kept specific subtitle color
+      color: #a0aab2;
       line-height: 1.6;
       margin: 0 0 48px 0;
       max-width: 320px;
@@ -110,7 +110,7 @@
     border-radius: $border-radius-lg;
     border: 1px solid rgba($text-white, 0.05);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-
+    
     .header {
       text-align: center;
       margin-bottom: 40px;
@@ -164,20 +164,12 @@
         display: flex;
         align-items: center;
 
-        .toggle-password {
+        ::ng-deep .toggle-password-btn {
           position: absolute;
-          right: 16px;
-          background: none;
-          border: none;
-          color: $text-dim;
-          cursor: pointer;
-          padding: 0;
-          @include flex-center;
-          transition: color $transition-speed ease;
-
-          &:hover {
-            color: $primary;
-          }
+          right: 8px;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
         }
       }
 
@@ -208,29 +200,10 @@
       }
     }
 
-    .submit-btn {
+    ::ng-deep .submit-btn {
       width: 100%;
-      background-color: $primary;
-      color: $bg-main;
-      border: none;
-      padding: 16px;
-      border-radius: $border-radius-md;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all $transition-speed ease;
-      font-family: inherit;
+      display: block;
       margin-top: 16px;
-
-      &:hover:not(:disabled) {
-        background-color: $primary-hover;
-        transform: translateY(-1px);
-      }
-
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
     }
 
     .signup-link {
