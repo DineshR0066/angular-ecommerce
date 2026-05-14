@@ -7,10 +7,12 @@ import { SnackbarService } from '../../../shared/components/snackbar/snackbar.se
 import { I18nService } from '../../../core/services/i18n.service';
 import { ForgotPasswordSchema } from '../schemas/auth.schemas';
 
+import { ButtonComponent } from '../../../shared/components/button/button';
+
 @Component({
   selector: 'app-forget-password',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, ButtonComponent],
   templateUrl: './forget-password.html',
   styleUrl: './forget-password.scss',
 })

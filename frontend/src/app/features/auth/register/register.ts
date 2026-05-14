@@ -14,18 +14,20 @@ import { SnackbarService } from '../../../shared/components/snackbar/snackbar.se
 import { I18nService } from '../../../core/services/i18n.service';
 import { RegisterSchema } from '../schemas/auth.schemas';
 
+import { ButtonComponent } from '../../../shared/components/button/button';
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, ButtonComponent],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
 export class Register implements OnInit {
   registerForm!: FormGroup;
-  showPassword = signal<Boolean>(false);
-  showConfirmPassword = signal<Boolean>(false);
-  isSubmitting = signal<Boolean>(false);
+  showPassword = signal<boolean>(false);
+  showConfirmPassword = signal<boolean>(false);
+  isSubmitting = signal<boolean>(false);
 
   readonly t: I18nService['t'];
   private readonly fb = inject(FormBuilder);

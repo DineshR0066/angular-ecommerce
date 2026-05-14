@@ -68,7 +68,7 @@
                    [attr.aria-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
                    [attr.aria-describedby]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'reg-password-error' : null"
                    [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" />
-            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('password')"
+            <app-button type="button" variant="ghost" size="sm" class="toggle-password-btn" (click)="togglePasswordVisibility('password')"
                     [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
                     [attr.aria-pressed]="showPassword()">
               @if (!showPassword()) {
@@ -77,7 +77,7 @@
               @if (showPassword()) {
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
               }
-            </button>
+            </app-button>
           </div>
           @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
             <div id="reg-password-error" class="error-message" role="alert">
@@ -101,7 +101,7 @@
                    [attr.aria-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
                    [attr.aria-describedby]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched ? 'confirm-password-error' : null"
                    [class.is-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" />
-            <button type="button" class="toggle-password" (click)="togglePasswordVisibility('confirmPassword')"
+            <app-button type="button" variant="ghost" size="sm" class="toggle-password-btn" (click)="togglePasswordVisibility('confirmPassword')"
                     [attr.aria-label]="showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'"
                     [attr.aria-pressed]="showConfirmPassword()">
               @if (!showConfirmPassword()) {
@@ -110,7 +110,7 @@
               @if (showConfirmPassword()) {
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
               }
-            </button>
+            </app-button>
           </div>
           @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
             <div id="confirm-password-error" class="error-message" role="alert">
@@ -148,9 +148,9 @@
                  [class.is-invalid]="registerForm.get('state')?.invalid && registerForm.get('state')?.touched" />
         </div>
 
-        <button type="submit" class="submit-btn" [disabled]="registerForm.invalid || isSubmitting()" [attr.aria-busy]="isSubmitting()">
-          {{ isSubmitting() ? '...' : t('auth.register.submitBtn') }}
-        </button>
+        <app-button type="submit" variant="primary" size="lg" class="submit-btn" [disabled]="registerForm.invalid" [loading]="isSubmitting()">
+          {{ t('auth.register.submitBtn') }}
+        </app-button>
 
         <div class="login-link">
           <p>{{t('auth.register.haveAccount')}} <a routerLink="/auth/login">{{t('auth.register.login')}}</a></p>

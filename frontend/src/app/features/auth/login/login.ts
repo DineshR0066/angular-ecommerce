@@ -6,11 +6,12 @@ import { AuthService } from '../services/authService';
 import { SnackbarService } from '../../../shared/components/snackbar/snackbar.service';
 import { I18nService } from '../../../core/services/i18n.service';
 import { LoginSchema } from '../schemas/auth.schemas';
+import { ButtonComponent } from '../../../shared/components/button/button';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, ButtonComponent],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -65,7 +66,7 @@ export class Login implements OnInit {
         next: () => {
           this.snackbar.success(this.t('auth.login.success'));
           setTimeout(() => {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['home']);
           }, 1500);
         },
         error: () => {
