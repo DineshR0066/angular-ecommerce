@@ -1,0 +1,12 @@
+.customer-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #050708; // Match the background color of orders
+}
+
+.main-content {
+  margin-top: 72px; // Height of the fixed navbar
+  flex: 1;
+  width: 100%;
+}

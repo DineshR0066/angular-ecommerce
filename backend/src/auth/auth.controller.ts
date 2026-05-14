@@ -37,7 +37,8 @@ export class AuthController {
         return {
             message: "User registered successfully",
             user_id: userId,
-            email:email
+            email:email,
+            accessToken
         };
     }
 
@@ -67,6 +68,7 @@ export class AuthController {
         return {
             message: "User logged in successfully",
             refresh_token: refreshToken,
+            accessToken,
             user
         };
     }

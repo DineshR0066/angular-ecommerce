@@ -1,9 +1,9 @@
 <div class="register-container" role="main">
   <div class="left-panel" aria-hidden="true">
-    <div class="logo">{{t('brand.logoLetter')}}</div>
+    <div class="logo">{{ 'brand.logoLetter' | translate }}</div>
     <div class="content">
-      <h1 class="title">{{t('brand.name')}}<br/>{{t('brand.nameLine2')}}</h1>
-      <p class="subtitle">{{t('brand.tagline')}}</p>
+      <h1 class="title">{{ 'brand.name' | translate }}<br/>{{ 'brand.nameLine2' | translate }}</h1>
+      <p class="subtitle">{{ 'brand.tagline' | translate }}</p>
       <div class="dots" aria-hidden="true">
         <span class="dot active"></span>
         <span class="dot"></span>
@@ -14,16 +14,16 @@
   <div class="right-panel">
     <div class="register-card">
       <div class="header">
-        <h2 id="register-heading">{{t('auth.register.title')}}</h2>
-        <p>{{t('auth.register.subtitle')}}</p>
+        <h2 id="register-heading">{{ 'auth.register.title' | translate }}</h2>
+        <p>{{ 'auth.register.subtitle' | translate }}</p>
       </div>
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" aria-labelledby="register-heading" novalidate>
         <!-- Username -->
         <div class="form-group">
-          <label class="sr-only" for="username">{{t('auth.fields.username')}}</label>
+          <label class="sr-only" for="username">{{ 'auth.fields.username' | translate }}</label>
           <input type="text" id="username" formControlName="username"
-                 [placeholder]="t('auth.fields.username')"
+                 [placeholder]="'auth.fields.username' | translate"
                  autocomplete="username"
                  [attr.aria-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
                  [attr.aria-describedby]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched ? 'username-error' : null"
@@ -31,7 +31,7 @@
           @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
             <div id="username-error" class="error-message" role="alert">
               @if (registerForm.get('username')?.hasError('required')) {
-                <span>{{t('auth.errors.usernameRequired')}}</span>
+                <span>{{ 'auth.errors.usernameRequired' | translate }}</span>
               }
             </div>
           }
@@ -39,9 +39,9 @@
 
         <!-- Email -->
         <div class="form-group">
-          <label class="sr-only" for="email">{{t('auth.fields.email')}}</label>
+          <label class="sr-only" for="email">{{ 'auth.fields.email' | translate }}</label>
           <input type="email" id="email" formControlName="email"
-                 [placeholder]="t('auth.fields.email')"
+                 [placeholder]="'auth.fields.email' | translate"
                  autocomplete="email"
                  [attr.aria-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
                  [attr.aria-describedby]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'reg-email-error' : null"
@@ -49,10 +49,10 @@
           @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
             <div id="reg-email-error" class="error-message" role="alert">
               @if (registerForm.get('email')?.hasError('required')) {
-                <span>{{t('auth.errors.emailRequired')}}</span>
+                <span>{{ 'auth.errors.emailRequired' | translate }}</span>
               }
               @if (registerForm.get('email')?.hasError('email')) {
-                <span>{{t('auth.errors.emailInvalid')}}</span>
+                <span>{{ 'auth.errors.emailInvalid' | translate }}</span>
               }
             </div>
           }
@@ -60,10 +60,10 @@
 
         <!-- Password -->
         <div class="form-group">
-          <label class="sr-only" for="password">{{t('auth.fields.password')}}</label>
+          <label class="sr-only" for="password">{{ 'auth.fields.password' | translate }}</label>
           <div class="password-input-wrapper">
             <input [type]="showPassword() ? 'text' : 'password'" id="password" formControlName="password"
-                   [placeholder]="t('auth.fields.password')"
+                   [placeholder]="'auth.fields.password' | translate"
                    autocomplete="new-password"
                    [attr.aria-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
                    [attr.aria-describedby]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'reg-password-error' : null"
@@ -82,10 +82,10 @@
           @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
             <div id="reg-password-error" class="error-message" role="alert">
               @if (registerForm.get('password')?.hasError('required')) {
-                <span>{{t('auth.errors.passwordRequired')}}</span>
+                <span>{{ 'auth.errors.passwordRequired' | translate }}</span>
               }
               @if (registerForm.get('password')?.hasError('minlength')) {
-                <span>{{t('auth.errors.passwordMinLength')}}</span>
+                <span>{{ 'auth.errors.passwordMinLength' | translate }}</span>
               }
             </div>
           }
@@ -93,10 +93,10 @@
 
         <!-- Confirm Password -->
         <div class="form-group">
-          <label class="sr-only" for="confirmPassword">{{t('auth.fields.confirmPassword')}}</label>
+          <label class="sr-only" for="confirmPassword">{{ 'auth.fields.confirmPassword' | translate }}</label>
           <div class="password-input-wrapper">
             <input [type]="showConfirmPassword() ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword"
-                   [placeholder]="t('auth.fields.confirmPassword')"
+                   [placeholder]="'auth.fields.confirmPassword' | translate"
                    autocomplete="new-password"
                    [attr.aria-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
                    [attr.aria-describedby]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched ? 'confirm-password-error' : null"
@@ -114,7 +114,7 @@
           </div>
           @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
             <div id="confirm-password-error" class="error-message" role="alert">
-              <span>{{t('auth.errors.passwordMismatch')}}</span>
+              <span>{{ 'auth.errors.passwordMismatch' | translate }}</span>
             </div>
           }
         </div>
@@ -122,16 +122,16 @@
         <!-- Zip & City -->
         <div class="form-row">
           <div class="form-group flex-1">
-            <label class="sr-only" for="zip_code">{{t('auth.fields.zipCode')}}</label>
+            <label class="sr-only" for="zip_code">{{ 'auth.fields.zipCode' | translate }}</label>
             <input type="number" id="zip_code" formControlName="zip_code"
-                   [placeholder]="t('auth.fields.zipCode')"
+                   [placeholder]="'auth.fields.zipCode' | translate"
                    [attr.aria-invalid]="registerForm.get('zip_code')?.invalid && registerForm.get('zip_code')?.touched"
                    [class.is-invalid]="registerForm.get('zip_code')?.invalid && registerForm.get('zip_code')?.touched" />
           </div>
           <div class="form-group flex-1">
-            <label class="sr-only" for="city">{{t('auth.fields.city')}}</label>
+            <label class="sr-only" for="city">{{ 'auth.fields.city' | translate }}</label>
             <input type="text" id="city" formControlName="city"
-                   [placeholder]="t('auth.fields.city')"
+                   [placeholder]="'auth.fields.city' | translate"
                    autocomplete="address-level2"
                    [attr.aria-invalid]="registerForm.get('city')?.invalid && registerForm.get('city')?.touched"
                    [class.is-invalid]="registerForm.get('city')?.invalid && registerForm.get('city')?.touched" />
@@ -140,20 +140,20 @@
 
         <!-- State -->
         <div class="form-group">
-          <label class="sr-only" for="state">{{t('auth.fields.state')}}</label>
+          <label class="sr-only" for="state">{{ 'auth.fields.state' | translate }}</label>
           <input type="text" id="state" formControlName="state"
-                 [placeholder]="t('auth.fields.state')"
+                 [placeholder]="'auth.fields.state' | translate"
                  autocomplete="address-level1"
                  [attr.aria-invalid]="registerForm.get('state')?.invalid && registerForm.get('state')?.touched"
                  [class.is-invalid]="registerForm.get('state')?.invalid && registerForm.get('state')?.touched" />
         </div>
 
         <app-button type="submit" variant="primary" size="lg" class="submit-btn" [disabled]="registerForm.invalid" [loading]="isSubmitting()">
-          {{ t('auth.register.submitBtn') }}
+          {{ 'auth.register.submitBtn' | translate }}
         </app-button>
 
         <div class="login-link">
-          <p>{{t('auth.register.haveAccount')}} <a routerLink="/auth/login">{{t('auth.register.login')}}</a></p>
+          <p>{{ 'auth.register.haveAccount' | translate }} <a routerLink="/auth/login">{{ 'auth.register.login' | translate }}</a></p>
         </div>
       </form>
     </div>

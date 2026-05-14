@@ -5,8 +5,10 @@
   padding: 0.75rem 2rem;
   background-color: #0f1214;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
   backdrop-filter: blur(10px);
 
@@ -42,9 +44,13 @@
       border-radius: 0.5rem;
       transition: all 0.2s;
 
-      &.home-link {
+      &.active {
         background: rgba(255, 255, 255, 0.05);
         color: #f8fafc;
+      }
+
+      &.icon-only {
+        padding: 0.5rem;
       }
 
       &:hover {
@@ -57,7 +63,19 @@
       }
     }
 
-    // Theme toggle is now handled by ButtonComponent
+    .logout-btn {
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.1);
+      
+      &:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.2);
+      }
+
+      .logout-icon {
+        color: #ef4444;
+      }
+    }
 
     .login-btn {
       background-color: #7dd3fc;

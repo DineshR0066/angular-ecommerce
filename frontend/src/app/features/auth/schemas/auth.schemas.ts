@@ -69,6 +69,7 @@ export type ResetPasswordPayload = z.infer<typeof ResetPasswordSchema>;
 // ─── API Response Types ───────────────────────────────────────────────────────
 export interface LoginResponse {
   readonly message: string;
+  readonly accessToken: string;
   readonly refresh_token?: string;
   readonly user?: {
     readonly email: string;
@@ -81,6 +82,8 @@ export interface RegisterResponse {
   readonly message: string;
   readonly user_id: string;
   readonly email: string;
+  readonly accessToken?: string;
+  readonly refreshToken?: string;
 }
 
 export interface ForgotPasswordResponse {

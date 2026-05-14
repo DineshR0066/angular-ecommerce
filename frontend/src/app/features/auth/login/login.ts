@@ -7,11 +7,12 @@ import { SnackbarService } from '../../../shared/components/snackbar/snackbar.se
 import { I18nService } from '../../../core/services/i18n.service';
 import { LoginSchema } from '../schemas/auth.schemas';
 import { ButtonComponent } from '../../../shared/components/button/button';
+import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, ButtonComponent],
+  imports: [ReactiveFormsModule, RouterLink, ButtonComponent, TranslatePipe],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -22,7 +23,6 @@ export class Login implements OnInit {
   isSubmitting = signal<boolean>(false);
 
   // ── Services ──────────────────────────────────────────────────────────────
-  readonly t: I18nService['t'];
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -30,8 +30,8 @@ export class Login implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly i18n = inject(I18nService);
 
-  constructor() {
-    this.t = this.i18n.t.bind(this.i18n);
+  t(key: string, params?: Record<string, string>): string {
+    return this.i18n.t(key, params);
   }
 
   ngOnInit(): void {
@@ -63,11 +63,18 @@ export class Login implements OnInit {
       .login(parsed.data)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.snackbar.success(this.t('auth.login.success'));
-          setTimeout(() => {
+          this.authService.saveSession(response);
+          
+          const user = response.user;
+          if (user?.role === 'admin') {
+            this.router.navigate(['admin/dashboard']);
+          } else if (user?.role === 'seller') {
+            this.router.navigate(['seller/dashboard']);
+          } else {
             this.router.navigate(['home']);
-          }, 1500);
+          }
         },
         error: () => {
           this.snackbar.error(this.t('auth.login.error'));

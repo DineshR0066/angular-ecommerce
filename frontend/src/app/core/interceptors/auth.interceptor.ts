@@ -1,7 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { StorageService } from '../services/storage.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('accessToken');
+  const storage = inject(StorageService);
+  const token = storage.getItem<string>('accessToken');
 
   if (token) {
     const authReq = req.clone({
