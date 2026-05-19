@@ -1,8 +1,8 @@
 <div class="orders-container">
   <header class="orders-header">
     <div class="header-content">
-      <h1>My Orders</h1>
-      <p>Track and manage your recent purchases</p>
+      <h1>Orders</h1>
+      <p>Track and manage recent purchases</p>
     </div>
     <button class="refresh-btn" (click)="loadOrders()" [disabled]="isLoading()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.spinning]="isLoading()">
@@ -18,7 +18,7 @@
   @if (isLoading()) {
     <div class="loading-state">
       <div class="spinner"></div>
-      <p>Fetching your orders...</p>
+      <p>Fetching orders...</p>
     </div>
   } @else if (errorMessage()) {
     <div class="error-state">

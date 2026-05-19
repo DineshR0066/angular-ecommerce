@@ -1,12 +1,12 @@
 import { Component, input,output } from '@angular/core';
 import { Product } from '../../models/product.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule,CurrencyPipe } from '@angular/common';
 import { ButtonComponent } from '../button/button';
 
 @Component({
   selector: 'app-product-modal',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, CurrencyPipe],
   templateUrl: './product-modal.html',
   styleUrl: './product-modal.scss',
 })

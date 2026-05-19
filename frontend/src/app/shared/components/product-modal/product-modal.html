@@ -22,7 +22,7 @@
 
         <div class="info-group">
           <label>PRICE</label>
-          <p class="product-price">₹{{ product().price }}</p>
+          <p class="product-price">{{ product().price | currency:'INR'}}</p>
         </div>
 
         <div class="info-group">

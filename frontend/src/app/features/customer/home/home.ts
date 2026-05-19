@@ -13,6 +13,7 @@ import { SnackbarService } from '../../../shared/components/snackbar/snackbar.se
 import { AuthService } from '../../auth/services/authService';
 
 import { FormatCategoryPipe } from '../../../shared/pipes/format-category.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { FormatCategoryPipe } from '../../../shared/pipes/format-category.pipe';
 })
 export class Home implements OnInit {
   private readonly productService = inject(ProductService);
+  private readonly router = inject(Router);
 
   readonly products = signal<Product[]>([]);
   readonly categories = signal<string[]>([]);
@@ -93,6 +95,25 @@ export class Home implements OnInit {
   openBuyNowModal(product: Product) {
     this.selectedProduct.set(null);
     this.buyNowProduct.set(product);
+  }
+
+  addToCart(product: Product) {
+    const user = this.authService.currentUser();
+    if(!user) {
+      this.snackbar.show('Please login to add to cart');
+      this.router.navigate(['/auth/login'])
+      return;
+    }
+
+    this.productService.addToCart(user.user_id, product.product_id).subscribe({
+      next: () => {
+        this.snackbar.show('Product added to cart successfully!');
+        this.closeProductModal();
+      },
+      error: (err) => {
+        this.snackbar.show(err.error?.message || 'Failed to add product to cart');
+      }
+    })
   }
 
   closeBuyNowModal() {

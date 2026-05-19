@@ -1,11 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { Product } from '../../models/product.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
 })
