@@ -35,7 +35,7 @@ export const routes: Routes = [
           {
             path: 'cart',
             loadComponent: () => 
-              import('./features/customer/cart/cart').then(m => m.Cart)
+              import('./features/customer/cart/cart').then(m => m.CartComponent)
           }
         ]
       }

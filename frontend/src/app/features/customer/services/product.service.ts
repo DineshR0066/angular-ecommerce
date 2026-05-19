@@ -43,4 +43,16 @@ export class ProductService {
       params: { limit: limit.toString(), page: page.toString() },
     });
   }
+
+  getCart(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`users/cart`)
+  }
+
+  addToCart(userId: string, productId: string): Observable<any> {
+    return this.http.post<any>(`users/${userId}/cart/${productId}`,null);
+  }
+
+  removeFromCart(userId: string, productId: string): Observable<any[]>{
+    return this.http.patch<any[]>(`users/${userId}/cart/${productId}`, null);
+  }
 }

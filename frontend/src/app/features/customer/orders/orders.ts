@@ -2,20 +2,16 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { ProductService } from '../services/product.service';
 import { AuthService } from '../../auth/services/authService';
+import { Router} from '@angular/router';
+import { Order } from '../schema/customer.schema';
 
-interface Order {
-  id: string;
-  category?: string;
-  image: string;
-  productName: string;
-  orderedAt: string;
-  productPrice: number;
-  freight: number;
-  totalPrice: number;
-  status: string;
-  payment: string;
-  installments: number;
-  estimatedDelivery: string;
+interface User {
+
+  user_id: string,
+  email: string,
+  role: string,
+  accessToken?: string,
+  refreshToken?: string,
 }
 
 @Component({
@@ -28,9 +24,10 @@ interface Order {
 export class Orders implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   orders = signal<Order[]>([]);
-  isLoading = signal(false);
+  isLoading = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
 
   ngOnInit() {
@@ -38,13 +35,16 @@ export class Orders implements OnInit {
   }
 
   loadOrders() {
-    const user = this.authService.currentUser();
-    if (!user) return;
+    const user:User|null|undefined = this.authService.currentUser();
+    if (!user) {
+      this.router.navigate(['/auth/login']);
+      return;
+    };
 
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    this.productService.getOrders(user.user_id).subscribe({
+    this.productService.getOrders(user!.user_id).subscribe({
       next: (data) => {
         const mappedOrders: Order[] = data.map((item: any) => ({
           id: item.order_id,
