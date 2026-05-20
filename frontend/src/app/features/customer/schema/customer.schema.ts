@@ -1,15 +1,17 @@
 import { z } from "zod";
 
-export const CartSchema = z.object({
-  id: z.string(),
-  category: z.string(),
-  image: z.string(),
-  price: z.number(),
-  productQuantity: z.number(),
-  quantity: z.number(),
-})
+// export const CartSchema = z.object({
+//   id: z.string(),
+//   seller_id: z.string(),
+//   category_name: z.string(),
+//   product_name: z.string(),
+//   image: z.string(),
+//   price: z.number(),
+//   product_quantity: z.number(),
+//   quantity: z.number(),
+// })
 
-export type Cart = z.infer<typeof CartSchema>;
+// export type Cart = z.infer<typeof CartSchema>;
 
 export const OrderSchema = z.object({
   id: z.string(),

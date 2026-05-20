@@ -37,25 +37,25 @@
           <p>Add products to your cart and come back to review them here.</p>
         </div>
       } @else {
-        @for (item of cartItems(); track item.id) {
+        @for (item of cartItems(); track item.product_id) {
           <div class="cart-card">
             <div class="cart-card-header">
               <div class="cart-meta-info">
                 <div class="cart-id-block">
                   <span class="label">ITEM ID</span>
-                  <span class="value">#{{ item.id }}</span>
+                  <span class="value">#{{ item.product_id }}</span>
                 </div>
               </div>
-              <div class="cart-category" [attr.data-status]="item.category">
+              <div class="cart-category" [attr.data-status]="item.product_category_name">
                 <span class="status-dot"></span>
-                {{ item.category }}
+                {{ item.product_category_name }}
               </div>
             </div>
 
             <div class="cart-card-body">
               <div class="product-image-wrap">
-                @if (item.image) {
-                  <img [src]="item.image" [alt]="item.category" loading="lazy" />
+                @if (item.product_image_url) {
+                  <img [src]="item.product_image_url" [alt]="item.product_category_name" loading="lazy" />
                 } @else {
                   <div class="image-placeholder">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -68,14 +68,14 @@
               </div>
 
               <div class="product-details">
-                <h3 class="product-name">{{ item.category || 'Item' }}</h3>
+                <h3 class="product-name">{{ item.product_name || 'Item' }}</h3>
                 <div class="detail-chips">
                   <span class="chip payment-chip">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
                     Quantity: {{ item.quantity }}
                   </span>
-                  @if (item.productQuantity > 1) {
-                    <span class="chip installment-chip">Stock: {{ item.productQuantity }}</span>
+                  @if (item.product_qty > 1) {
+                    <span class="chip installment-chip">Stock: {{ item.product_qty }}</span>
                   }
                 </div>
               </div>
@@ -83,11 +83,19 @@
               <div class="cart-pricing">
                 <div class="price-row">
                   <span class="price-label">Unit Price</span>
-                  <span class="price-value">{{ item.price | currency:'INR' }}</span>
+                  <span class="price-value">{{ +item.price | currency:'INR' }}</span>
                 </div>
                 <div class="price-row">
                   <span class="price-label">Total</span>
                   <span class="price-value total-amount">{{ getItemTotal(item) | currency:'INR' }}</span>
+                </div>
+                <div class="buy-now-wrap">
+                  <app-button (btnClick)="buyNow(item)">
+                    Buy Now
+                  </app-button>
+                  <app-button (btnClick)="remove(item.product_id)">
+                    Remove
+                  </app-button>
                 </div>
               </div>
             </div>
@@ -97,3 +105,11 @@
     </div>
   }
 </div>
+
+@if (buyNowProduct(); as product) {
+  <app-buy-now-modal
+    [product]="product"
+    (close)="closeBuyNowModal()"
+    (confirm)="onConfirmPurchase($event)"
+  ></app-buy-now-modal>
+}
