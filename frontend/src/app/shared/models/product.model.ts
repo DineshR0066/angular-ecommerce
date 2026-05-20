@@ -6,6 +6,7 @@ export const ProductSchema = z.object({
   seller_id: z.string(),
   product_category_name: z.string(),
   product_qty: z.number().default(0),
+  quantity : z.number().default(1).optional(),
   product_image_url: z.string().default('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_HeSzHfBorKS4muw4IIeVvvRgnhyO8Gn8w&s'),
   price: z.number().default(0),
   product_name: z.string().default('Unknown Product'),

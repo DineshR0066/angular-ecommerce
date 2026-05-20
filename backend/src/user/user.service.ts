@@ -220,7 +220,9 @@ export class UserService {
             {
                 $project: {
                     product_id: '$cart.product_id',
+                    seller_id: '$cart.seller_id',
                     product_category_name: '$cart.product_category_name',
+                    product_name: '$cart.product_name',
                     product_image_url: '$cart.product_image_url',
                     price: '$cart.price',
                     product_weight_g: '$cart.product_weight_g',
