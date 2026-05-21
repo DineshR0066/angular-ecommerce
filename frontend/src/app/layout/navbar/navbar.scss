@@ -1,0 +1,101 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  background-color: #0f1214;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+
+  .navbar-brand {
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #7dd3fc;
+      text-decoration: none;
+      letter-spacing: -0.025em;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+
+      &.active {
+        background: rgba(255, 255, 255, 0.05);
+        color: #f8fafc;
+      }
+
+      &.icon-only {
+        padding: 0.5rem;
+      }
+
+      &:hover {
+        color: #f8fafc;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .icon {
+        opacity: 0.8;
+      }
+    }
+
+    .logout-btn {
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.1);
+      
+      &:hover {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.2);
+      }
+
+      .logout-icon {
+        color: #ef4444;
+      }
+    }
+
+    .login-btn {
+      background-color: #7dd3fc;
+      color: #0f172a;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        background-color: #bae6fd;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(125, 211, 252, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}

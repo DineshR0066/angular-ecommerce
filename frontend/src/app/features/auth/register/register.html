@@ -1,0 +1,161 @@
+<div class="register-container" role="main">
+  <div class="left-panel" aria-hidden="true">
+    <div class="logo">{{ 'brand.logoLetter' | translate }}</div>
+    <div class="content">
+      <h1 class="title">{{ 'brand.name' | translate }}<br/>{{ 'brand.nameLine2' | translate }}</h1>
+      <p class="subtitle">{{ 'brand.tagline' | translate }}</p>
+      <div class="dots" aria-hidden="true">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="register-card">
+      <div class="header">
+        <h2 id="register-heading">{{ 'auth.register.title' | translate }}</h2>
+        <p>{{ 'auth.register.subtitle' | translate }}</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" aria-labelledby="register-heading" novalidate>
+        <!-- Username -->
+        <div class="form-group">
+          <label class="sr-only" for="username">{{ 'auth.fields.username' | translate }}</label>
+          <input type="text" id="username" formControlName="username"
+                 [placeholder]="'auth.fields.username' | translate"
+                 autocomplete="username"
+                 [attr.aria-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+                 [attr.aria-describedby]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched ? 'username-error' : null"
+                 [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" />
+          @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+            <div id="username-error" class="error-message" role="alert">
+              @if (registerForm.get('username')?.hasError('required')) {
+                <span>{{ 'auth.errors.usernameRequired' | translate }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="sr-only" for="email">{{ 'auth.fields.email' | translate }}</label>
+          <input type="email" id="email" formControlName="email"
+                 [placeholder]="'auth.fields.email' | translate"
+                 autocomplete="email"
+                 [attr.aria-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+                 [attr.aria-describedby]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched ? 'reg-email-error' : null"
+                 [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" />
+          @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+            <div id="reg-email-error" class="error-message" role="alert">
+              @if (registerForm.get('email')?.hasError('required')) {
+                <span>{{ 'auth.errors.emailRequired' | translate }}</span>
+              }
+              @if (registerForm.get('email')?.hasError('email')) {
+                <span>{{ 'auth.errors.emailInvalid' | translate }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="sr-only" for="password">{{ 'auth.fields.password' | translate }}</label>
+          <div class="password-input-wrapper">
+            <input [type]="showPassword() ? 'text' : 'password'" id="password" formControlName="password"
+                   [placeholder]="'auth.fields.password' | translate"
+                   autocomplete="new-password"
+                   [attr.aria-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                   [attr.aria-describedby]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched ? 'reg-password-error' : null"
+                   [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" />
+            <app-button type="button" variant="ghost" size="sm" class="toggle-password-btn" (click)="togglePasswordVisibility('password')"
+                    [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                    [attr.aria-pressed]="showPassword()">
+              @if (!showPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              }
+              @if (showPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+              }
+            </app-button>
+          </div>
+          @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+            <div id="reg-password-error" class="error-message" role="alert">
+              @if (registerForm.get('password')?.hasError('required')) {
+                <span>{{ 'auth.errors.passwordRequired' | translate }}</span>
+              }
+              @if (registerForm.get('password')?.hasError('minlength')) {
+                <span>{{ 'auth.errors.passwordMinLength' | translate }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label class="sr-only" for="confirmPassword">{{ 'auth.fields.confirmPassword' | translate }}</label>
+          <div class="password-input-wrapper">
+            <input [type]="showConfirmPassword() ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword"
+                   [placeholder]="'auth.fields.confirmPassword' | translate"
+                   autocomplete="new-password"
+                   [attr.aria-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+                   [attr.aria-describedby]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched ? 'confirm-password-error' : null"
+                   [class.is-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" />
+            <app-button type="button" variant="ghost" size="sm" class="toggle-password-btn" (click)="togglePasswordVisibility('confirmPassword')"
+                    [attr.aria-label]="showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'"
+                    [attr.aria-pressed]="showConfirmPassword()">
+              @if (!showConfirmPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              }
+              @if (showConfirmPassword()) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+              }
+            </app-button>
+          </div>
+          @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
+            <div id="confirm-password-error" class="error-message" role="alert">
+              <span>{{ 'auth.errors.passwordMismatch' | translate }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Zip & City -->
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label class="sr-only" for="zip_code">{{ 'auth.fields.zipCode' | translate }}</label>
+            <input type="number" id="zip_code" formControlName="zip_code"
+                   [placeholder]="'auth.fields.zipCode' | translate"
+                   [attr.aria-invalid]="registerForm.get('zip_code')?.invalid && registerForm.get('zip_code')?.touched"
+                   [class.is-invalid]="registerForm.get('zip_code')?.invalid && registerForm.get('zip_code')?.touched" />
+          </div>
+          <div class="form-group flex-1">
+            <label class="sr-only" for="city">{{ 'auth.fields.city' | translate }}</label>
+            <input type="text" id="city" formControlName="city"
+                   [placeholder]="'auth.fields.city' | translate"
+                   autocomplete="address-level2"
+                   [attr.aria-invalid]="registerForm.get('city')?.invalid && registerForm.get('city')?.touched"
+                   [class.is-invalid]="registerForm.get('city')?.invalid && registerForm.get('city')?.touched" />
+          </div>
+        </div>
+
+        <!-- State -->
+        <div class="form-group">
+          <label class="sr-only" for="state">{{ 'auth.fields.state' | translate }}</label>
+          <input type="text" id="state" formControlName="state"
+                 [placeholder]="'auth.fields.state' | translate"
+                 autocomplete="address-level1"
+                 [attr.aria-invalid]="registerForm.get('state')?.invalid && registerForm.get('state')?.touched"
+                 [class.is-invalid]="registerForm.get('state')?.invalid && registerForm.get('state')?.touched" />
+        </div>
+
+        <app-button type="submit" variant="primary" size="lg" class="submit-btn" [disabled]="registerForm.invalid" [loading]="isSubmitting()">
+          {{ 'auth.register.submitBtn' | translate }}
+        </app-button>
+
+        <div class="login-link">
+          <p>{{ 'auth.register.haveAccount' | translate }} <a routerLink="/auth/login">{{ 'auth.register.login' | translate }}</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

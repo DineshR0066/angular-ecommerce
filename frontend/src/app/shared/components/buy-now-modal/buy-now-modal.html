@@ -1,0 +1,71 @@
+<div class="modal-overlay" (click)="onCancel()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Buy Product</h2>
+    </div>
+
+    <form [formGroup]="buyForm" (ngSubmit)="onConfirm()">
+      <div class="modal-body">
+        <div class="info-banner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <p>Buying: <strong>{{ product().product_name }}</strong></p>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <div class="input-wrapper">
+              <input type="number" id="quantity" formControlName="quantity" min="1" [max]="product().product_qty">
+              <span class="stock-hint">{{ product().product_qty }} left</span>
+            </div>
+            @if (buyForm.get('quantity')?.errors?.['max']) {
+              <small class="error-text">Only {{ product().product_qty }} items available</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="payment_type">Payment Type</label>
+            <select id="payment_type" formControlName="payment_type">
+              <option value="Credit Card">Credit Card</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Stripe">Stripe</option>
+              <option value="voucher">Voucher</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="payment_installments">Payment Installments</label>
+            <input type="number" id="payment_installments" formControlName="payment_installments" min="1">
+          </div>
+
+          <div class="form-group">
+            <label for="address">Select Address</label>
+            <select id="address" formControlName="address">
+              @if (isLoadingAddresses()) {
+                <option disabled>Loading addresses...</option>
+              } @else if (addresses().length === 0) {
+                <option [ngValue]="null" disabled>No addresses found. Add one in profile.</option>
+              } @else {
+                @for (addr of addresses(); track addr._id) {
+                  <option [ngValue]="addr">
+                    {{ addr.address_line }}, {{ addr.city }}, {{ addr.state }}
+                  </option>
+                }
+              }
+            </select>
+            @if (!isLoadingAddresses() && addresses().length === 0) {
+              <small class="warning-text">Please add an address in your profile to proceed.</small>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <app-button type="button" variant="danger" (btnClick)="onCancel()">Cancel</app-button>
+        <app-button type="submit" variant="teal" [disabled]="buyForm.invalid || isLoadingAddresses()">
+          Confirm
+        </app-button>
+      </div>
+    </form>
+  </div>
+</div>

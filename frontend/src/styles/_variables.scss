@@ -1,0 +1,31 @@
+// ── Theme Colors ──
+$primary: #90ccd3;
+$primary-hover: #a5d8df;
+$bg-main: #0f1214;
+$bg-card: #181d22;
+$bg-input: #13171a;
+$bg-panel: #10181a;
+$bg-panel-gradient: #1a2c31;
+
+// ── Text Colors ──
+$text-white: #ffffff;
+$text-muted: #8b959e;
+$text-dim: #5c6670;
+$text-link: #90ccd3;
+$text-error: #e74c3c;
+
+// ── Layout ──
+$border-radius-lg: 24px;
+$border-radius-md: 12px;
+$transition-speed: 0.3s;
+
+// ── Mixins ──
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin panel-gradient {
+  background: radial-gradient(circle at 30% 30%, $bg-panel-gradient 0%, $bg-panel 100%);
+}
